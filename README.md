@@ -30,12 +30,14 @@ This project follows a layered data modeling approach:
 
 ```mermaid
 graph TD
-stg_orders --> fct_order_items
-int_order_products_all --> fct_order_items
-dim_products --> fct_order_items
-fct_order_items --> mart_orders_by_day
+  A[stg_orders] --> D[fct_order_items]
+  B[int_order_products_all] --> D
+  C[dim_products] --> D
+  D --> E[mart_orders_by_day]
+```
 
-Key Models
+## Key Models
+
 stg_orders: Cleans order-level data and derives day-of-the-week names
 
 stg_order_products_prior / train: Cleans order-product data from both datasets
@@ -50,22 +52,21 @@ mart_orders_by_day: Aggregated order trends by day of week
 
 
 
-Example Business Question
+## Example Business Question
 
 
 Which days of the week have the highest order volume and largest basket sizes?
 
 
 
-Example Insight
+## Example Insight
 
 
 Sunday has the highest number of orders and the largest average basket size, indicating customers tend to do larger grocery purchases on weekends.
 
 
 
-Testing
-
+## Testing
 
 dbt tests were implemented to ensure:
 
@@ -79,16 +80,17 @@ Valid categorical values
 
 
 
-How to Run
-Clone the repository
+## How to Run
 
-Create a virtual environment
+1. Clone the repository
+
+2. Create a virtual environment
 
 3. Install dbt
 
-pip install dbt-snowflake
+    pip install dbt-snowflake
 
-Configure your profiles.yml for Snowflake
+4. Configure your profiles.yml for Snowflake
 
 5. Run
 
@@ -98,7 +100,8 @@ dbt test
 dbt docs generate
 dbt docs serve
 
-What This Project Demonstrates
+## What This Project Demonstrates
+
 End-to-end data pipeline design
 
 Dimensional modeling (fact + dimension tables)
@@ -116,3 +119,7 @@ Future Improvements
 Add additional marts (e.g., product-level or user-level analysis)
 
 Expand testing coverage
+
+## dbt Lineage Graph
+
+![dbt Lineage Graph](images/dbt-lineage.png)
