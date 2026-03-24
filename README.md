@@ -32,8 +32,9 @@ This project follows a layered data modeling approach:
 graph TD
   A[stg_orders] --> D[fct_order_items]
   B[int_order_products_all] --> D
-C[dim_products] --> D
-D --> E[mart_orders_by_day]
+  C[dim_products] --> D
+  D --> E[mart_orders_by_day]
+```
 
 ## Key Models
 
@@ -58,7 +59,7 @@ Which days of the week have the highest order volume and largest basket sizes?
 
 
 
-Example Insight
+## Example Insight
 
 
 Sunday has the highest number of orders and the largest average basket size, indicating customers tend to do larger grocery purchases on weekends.
@@ -81,15 +82,15 @@ Valid categorical values
 
 ## How to Run
 
-Clone the repository
+1. Clone the repository
 
-Create a virtual environment
+2. Create a virtual environment
 
 3. Install dbt
 
-pip install dbt-snowflake
+    pip install dbt-snowflake
 
-Configure your profiles.yml for Snowflake
+4. Configure your profiles.yml for Snowflake
 
 5. Run
 
@@ -118,3 +119,7 @@ Future Improvements
 Add additional marts (e.g., product-level or user-level analysis)
 
 Expand testing coverage
+
+## dbt Lineage Graph
+
+![dbt Lineage Graph](images/dbt-lineage.png)
