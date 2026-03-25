@@ -82,6 +82,12 @@ Valid categorical values
 
 ## How to Run
 
+1. Set up raw tables in Snowflake
+
+    Run the SQL script located in:
+        `sql/snowflake_setup.sql`
+    This will create the Instacart tables in Snowflake and you will need to load the data from Kaggle.
+
 1. Clone the repository
 
 2. Create a virtual environment
@@ -90,15 +96,39 @@ Valid categorical values
 
     pip install dbt-snowflake
 
-4. Configure your profiles.yml for Snowflake
+4. Configure your `profiles.yml` for Snowflake
 
-5. Run
+Example:
 
+```yaml
+instacart:
+    target: dev
+    outputs:
+        dev:
+          type: snowflake
+          account: <your_account>
+          user: dbt_instacart
+          password: <your_password>
+          role: INSTACART_TRANSFORM
+          database: INSTACART
+          warehouse: COMPUTE_WH
+          schema: DEV
+          threads: 4
+```
+
+5. Run dbt models and tests
+
+```bash
 dbt deps
 dbt run
 dbt test
 dbt docs generate
 dbt docs serve
+```
+
+### Security Note
+
+This project does not include any real credentials. When creating the Snowflake user, you must manually set a password.
 
 ## What This Project Demonstrates
 
