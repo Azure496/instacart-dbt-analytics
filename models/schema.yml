@@ -1,0 +1,100 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: Cleaned order data for Instacart
+    columns:
+      - name: order_id
+        description: unique identifier for an order
+        data_tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: Identifier for the user who placed the order
+        data_tests:
+          - not_null
+        
+      - name: order_day_of_week
+        description: Numberic day of the week for the order
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6]
+
+  - name: stg_products
+    description: Cleaned products data for Instacart
+    columns:
+      - name: product_id
+        description: Unique identifier for a product
+        data_tests:
+          - not_null
+          - unique
+
+      - name: aisle_id
+        description: Identifier for the aisle where the product will be located
+        data_tests:
+          - not_null
+          - relationships:
+                to: ref('stg_aisles')
+                field: aisle_id
+
+      - name: department_id
+        description: Identifier for the department associated with the product
+        tests:
+          - not_null
+          - relationships:
+                to: ref('stg_department')
+                field: department_id
+      
+      - name: stg_departments
+        description: Cleaned department lookup table
+        columns:
+          - name: department_id 
+            description: Unique identifier for a department.
+            tests:
+              - not_null
+              - unique
+      
+      - name: int_order_products_all
+        description: Combined order-product rows from prior and train datasets.
+        columns:
+          - name: order_products_set
+            description: Indicates whether the record came from prior or train order-product data.
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['prior', 'train']
+
+          - name: order_id
+            description: Identifier for the products
+            tests:
+              - not_null
+
+      - name: dim_products
+        description: Product dimension with aisle and department attributes.
+        columns:
+          - name: product_id
+            description: Unique identifier for a product
+            tests:
+              - not_null
+              - unique
+
+      - name: fct_order_items
+        description: Fact table containing one row per product in an order
+        columns:
+          - name: order_id
+            description: Identifier for the order
+            tests: 
+              - not_null
+              - relationships:
+                to: ref('stg_orders')
+                field: order_id
+
+          - name: product_id
+            description: Identifier for the product in the order 
+            tests:
+              - not_null
+              - relationships:
+                to: ref('dim_products')
+                field: product_id
