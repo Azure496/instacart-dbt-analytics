@@ -30,17 +30,17 @@ This project follows a layered data modeling approach:
 
 ## Key Models
 
-stg_orders: Cleans order-level data and derives day-of-the-week names
+- stg_orders: Cleans order-level data and derives day-of-the-week names
 
-stg_order_products_prior / train: Cleans order-product data from both datasets
+- stg_order_products_prior / train: Cleans order-product data from both datasets
 
-int_order_products_all: Combines prior and train datasets
+- int_order_products_all: Combines prior and train datasets
 
-dim_products: Product dimension with aisle and department
+- dim_products: Product dimension with aisle and department
 
-fct_order_items: One row per product per order
+- fct_order_items: One row per product per order
 
-mart_orders_by_day: Aggregated order trends by day of week
+- mart_orders_by_day: Aggregated order trends by day of week
 
 
 
@@ -60,15 +60,15 @@ Sunday has the highest number of orders and the largest average basket size, ind
 
 ## Testing
 
-dbt tests were implemented to ensure:
+- dbt tests were implemented to ensure:
 
-Primary key uniqueness
+- Primary key uniqueness
 
-Non-null constraints
+- Non-null constraints
 
-Referential integrity between models
+- Referential integrity between models
 
-Valid categorical values
+- Valid categorical values
 
 
 
@@ -80,15 +80,15 @@ Valid categorical values
         `sql/snowflake_setup.sql`
     This will create the Instacart tables in Snowflake and you will need to load the data from Kaggle.
 
-1. Clone the repository
+2. Clone the repository
 
-2. Create a virtual environment
+3. Create a virtual environment
 
-3. Install dbt
+4. Install dbt
 
     pip install dbt-snowflake
 
-4. Configure your `profiles.yml` for Snowflake
+5. Configure your `profiles.yml` for Snowflake
 
 Example:
 
@@ -108,7 +108,7 @@ instacart:
           threads: 4
 ```
 
-5. Run dbt models and tests
+6. Run dbt models and tests
 
 ```bash
 dbt deps
@@ -124,23 +124,23 @@ This project does not include any real credentials. When creating the Snowflake 
 
 ## What This Project Demonstrates
 
-End-to-end data pipeline design
+- End-to-end data pipeline design
 
-Dimensional modeling (fact + dimension tables)
+- Dimensional modeling (fact + dimension tables)
 
-dbt project structuring
+- dbt project structuring
 
-SQL-based transformations
+- SQL-based transformations
 
-Data quality testing
+- Data quality testing
 
-Analytical modeling with marts
+- Analytical modeling with marts
 
-Future Improvements
+## Future Improvements
 
-Add additional marts (e.g., product-level or user-level analysis)
+- Add additional marts (e.g., product-level or user-level analysis)
 
-Expand testing coverage
+- Expand testing coverage
 
 ## dbt Lineage Graph
 
